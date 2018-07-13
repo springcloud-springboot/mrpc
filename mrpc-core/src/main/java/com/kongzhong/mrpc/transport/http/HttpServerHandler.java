@@ -16,6 +16,7 @@ import io.netty.buffer.Unpooled;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.handler.codec.http.*;
 import io.netty.util.CharsetUtil;
+import java.util.concurrent.TimeUnit;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.aop.support.AopUtils;
 
@@ -230,7 +231,9 @@ public class HttpServerHandler extends SimpleServerHandler<FullHttpRequest> {
 
     @Override
     public void exceptionCaught(ChannelHandlerContext ctx, Throwable cause) throws Exception {
-        log.error("Server io error: {}", ctx.channel(), cause);
+        if(!cause.getMessage().contains("Connection reset by peer")){
+            log.error("Server io error: {}", ctx.channel(), cause);
+        }
     }
 
 }

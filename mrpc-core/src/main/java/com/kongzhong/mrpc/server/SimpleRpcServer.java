@@ -298,6 +298,7 @@ public abstract class SimpleRpcServer {
         } catch (Exception e) {
             log.error("RPC server start error", e);
         } finally {
+            log.info("Netty shutdownGracefully");
             worker.shutdownGracefully();
             boss.shutdownGracefully();
         }
